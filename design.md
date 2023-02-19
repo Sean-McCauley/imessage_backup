@@ -76,6 +76,9 @@ For all of these tables to work together, relationship tables are also available
 
 Table      | Field         | Type 
  --------- | -----         | -----
+attachment | ROWID         | 
+attachment | guid          |
+attachment | original_guid |
 attachment | created_date  | INTEGER DEFAULT 0
 attachment | filename      | TEXT
 attachment | transfer_name | TEXT
@@ -85,6 +88,7 @@ attachment | is_outgoing   | INTEGER DEFAULT 0
 chat       | guid          | TEXT UNIQUE NOT NULL
 chat       | display_name  | TEXT
 chat       | group_id      | TEXT
+handle     |
 message    | text          | TEXT
 message    | service       | TEST
 message    | date          | INTEGER
@@ -124,6 +128,7 @@ timestamp     | date      | date/created_date
 text          |           | If any
 attachment    | filename  | If any
 attachment_type |           |
+attachment_size |           |
 reactions     |           |
 reply_to_guid |           |
 reply_thread_guid |
