@@ -1,1 +1,7 @@
 .DS_Store
+chat.db
+test.py
+temp.db
+db_backups/
+chat.db-shm
+chat.db-wal
