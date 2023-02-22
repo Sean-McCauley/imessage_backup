@@ -48,8 +48,9 @@ In my database, I want a couple differnt tables to make my life easier.
     - reply thread guid
 
 How do these tables relate to eachother?  
-1. __Chat to Contacts:__ I believe this is a  `many to many` relationship. Contacts can be a part of many chats, and a chat can have many contacts.
+1. __Chat to Contacts:__ I believe this is a  `many to many` relationship. Contacts can be a part of many chats, and a chat can have many contacts. This means I will need an extra table for this relationship.
 2. __Chat to Messages:__ I believe this is a `one to many` relationship. One chat contains many messages
+2. __Messages to Contacts:__ Each message should be from a contact, unless its from me. I need a way to map this out.    
 
 
 Helpul link for relating these tables:
@@ -76,7 +77,6 @@ For all of these tables to work together, relationship tables are also available
 
 Table      | Field         | Type 
  --------- | -----         | -----
-attachment | ROWID         | 
 attachment | guid          |
 attachment | original_guid |
 attachment | created_date  | INTEGER DEFAULT 0
@@ -86,22 +86,26 @@ attachment | mime_type     | TEXT
 attachment | total_bytes   | INTEGER DEFAULT 0
 attachment | is_outgoing   | INTEGER DEFAULT 0
 chat       | guid          | TEXT UNIQUE NOT NULL
+chat       | chat_identifier | 
 chat       | display_name  | TEXT
 chat       | group_id      | TEXT
-handle     |
+chat       | original_group_id |
+handle     | id
+message    | guid          | TEXT UNIQUE NOT NULL
 message    | text          | TEXT
+message    | hand_id       |
 message    | service       | TEST
 message    | date          | INTEGER
 message    | is_from_me    | INTEGER DEFAULT 0
 message    | is_emote      | INTEGER DEFAULT 0   
 message    | is_audio_message | INTEGER DEFAULT 0
-message    | guid          | TEXT UNIQUE NOT NULL
 message    | associated_message_guid | TEXT
 message    | associated_message_type | INTEGER DEFAULT 0
 message    | reply_to_guid | TEXT DEFAULT NULL
 message    | thread_orginator_guid | TEXT DEFAULT NULL
 
-
+## Reactions
+I SELECTed a few records with and without a reaction and compared the results. I discovered that the associated_message_type column was usually set to 0, but in messages with a reaction, it was an integer value between 2000-2005. I also noticed that associated_message_guid was present. Apple appears to be using 2000-2005 for its 5 reaction types, 3000-3005 for when a user removed a reaction, and 3 for an Apple Pay request.
 
 ## Translating Chat.DB to My database
 To create my table from `chat.db`, I will make a query to get all the data at once. I think that I will clean up certain attributes as I process each record. 
