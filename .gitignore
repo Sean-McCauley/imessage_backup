@@ -5,3 +5,4 @@ temp.db
 db_backups/
 chat.db-shm
 chat.db-wal
+__pycache__/
