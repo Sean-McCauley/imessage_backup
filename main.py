@@ -16,8 +16,6 @@ def convert_timestamp(apple_timestamp):
   epoch_timestamp = apple_timestamp + 978307200
   return epoch_timestamp
 
-  
-
 
 # --------------------------------------------------------------------------
 # MAIN LINE
